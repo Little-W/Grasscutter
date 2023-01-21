@@ -6,7 +6,7 @@ import emu.grasscutter.utils.Position;
 import emu.grasscutter.utils.Utils;
 
 public final class GameConstants {
-    public static String VERSION = "3.1.5x beta by Yusen ";
+    public static String VERSION = "3.3.0 by Yusen";
 
     public static final int DEFAULT_TEAMS = 4;
     public static final int MAX_TEAMS = 10;

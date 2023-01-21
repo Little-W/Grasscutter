@@ -264,6 +264,7 @@
       "fail": "命之座等级设置失败。",
       "failed_success": "命之座 %s 已设置为 %s。",
       "success": "命之座 %s 已设置为 %s。",
+      "successall": "所有角色的命之座已设置为 %s。",
       "description": "为当前活跃角色设置命座等级"
     },
     "setFetterLevel": {
@@ -292,7 +293,7 @@
       "description": "停止服务器"
     },
     "talent": {
-      "lower_16": "无效的天赋等级，天赋等级应在 1-15 之间。",
+      "out_of_range": "无效的天赋等级。天赋等级必须在 1-15 之间。",
       "set_id": "修改技能 %s - \"%s\" 至 %s。",
       "id_desc": "技能 %s - \"%s\" - \"%s\"",
       "invalid_skill_id": "无效的技能ID。",

@@ -3,9 +3,10 @@ package emu.grasscutter.server.http.dispatch;
 import com.google.protobuf.ByteString;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerRunMode;
+import emu.grasscutter.net.proto.QueryRegionListHttpRspOuterClass.QueryRegionListHttpRsp;
 import emu.grasscutter.net.proto.QueryCurrRegionHttpRspOuterClass.QueryCurrRegionHttpRsp;
-import emu.grasscutter.net.proto.RegionInfoOuterClass.RegionInfo;
 import emu.grasscutter.net.proto.RegionSimpleInfoOuterClass.RegionSimpleInfo;
+import emu.grasscutter.net.proto.RegionInfoOuterClass.RegionInfo;
 import emu.grasscutter.server.event.dispatch.QueryAllRegionsEvent;
 import emu.grasscutter.server.event.dispatch.QueryCurrentRegionEvent;
 import emu.grasscutter.server.http.Router;
@@ -23,7 +24,6 @@ import java.security.Signature;
 import java.util.regex.Pattern;
 
 import static emu.grasscutter.config.Configuration.*;
-import static emu.grasscutter.net.proto.QueryRegionListHttpRspOuterClass.QueryRegionListHttpRsp;
 
 /**
  * Handles requests related to region queries.
@@ -154,8 +154,12 @@ public final class RegionHandler implements Router {
                 }
 
                 String key_id = ctx.queryParam("key_id");
+
+                if (key_id == null)
+                    throw new Exception("Key ID was not set");
+
                 Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-                cipher.init(Cipher.ENCRYPT_MODE, key_id.equals("3") ? Crypto.CUR_OS_ENCRYPT_KEY : Crypto.CUR_CN_ENCRYPT_KEY);
+                cipher.init(Cipher.ENCRYPT_MODE, Crypto.EncryptionKeys.get(Integer.valueOf(key_id)));
                 var regionInfo = Utils.base64Decode(event.getRegionInfo());
 
                 //Encrypt regionInfo in chunks
